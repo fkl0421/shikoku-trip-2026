@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Shikoku Trip 2026 - Yadon Yellow Theme</title>
+    <title>Shikoku Trip 2026 - Yadon Theme</title>
     
     <!-- PWA Settings -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
-    <meta name="theme-color" content="#FFFBEB">
+    <meta name="theme-color" content="#FDF2F8">
     
-    <!-- App Icon (Yellow & Pink) -->
+    <!-- App Icon (Pink & Yellow) -->
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23F59E0B'/%3E%3Cpath d='M352 256L160 128V384L352 256Z' fill='white'/%3E%3C/svg%3E">
     <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23F59E0B'/%3E%3Cpath d='M352 256L160 128V384L352 256Z' fill='white'/%3E%3C/svg%3E">
 
@@ -46,6 +46,20 @@
                     },
                     fontFamily: {
                         sans: ['"Noto Sans TC"', '"Noto Sans JP"', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(5px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
                     }
                 }
             }
@@ -54,8 +68,8 @@
 
     <style>
         body {
-            background-color: #FDF2F8; /* 淡粉背景 */
-            color: #831843; /* 深粉文字 */
+            background-color: #FDF2F8;
+            color: #831843;
             -webkit-tap-highlight-color: transparent;
             overscroll-behavior-y: none;
             padding-top: env(safe-area-inset-top);
@@ -72,7 +86,7 @@
         }
         .tab-content.active { display: block; }
 
-        /* 按鈕與選取狀態：暖黃 Highlight */
+        /* UI Elements - Yellow Highlight */
         .category-radio:checked + div, .currency-radio:checked + div, .payment-radio:checked + div, .split-currency-radio:checked + div {
             background-color: #F59E0B; color: white; border-color: #F59E0B;
         }
@@ -125,10 +139,10 @@
                     </h3>
                     <i class="fa-solid fa-chevron-down text-gray-400 transition-transform group-open:rotate-180"></i>
                 </summary>
-                <div class="px-5 pb-5 border-t border-amber-100 pt-4">
+                <div class="px-5 pb-5 border-t border-pink-100 pt-4">
                     <div class="flex flex-wrap gap-2 mb-4" id="people-list-container"></div>
                     <div class="flex gap-2">
-                        <input type="text" id="new-person-name" placeholder="輸入名字" class="flex-1 bg-amber-50/50 border border-muji-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition">
+                        <input type="text" id="new-person-name" placeholder="輸入名字" class="flex-1 bg-pink-50/50 border border-muji-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition">
                         <button onclick="addPerson()" class="bg-muji-highlight text-white px-4 py-2 rounded-lg font-bold text-sm shadow-sm hover:bg-amber-600 transition">新增</button>
                     </div>
                 </div>
@@ -140,29 +154,29 @@
                 </h3>
                 <div class="space-y-4">
                      <div class="flex gap-2 items-center">
-                        <div class="flex bg-amber-50 rounded-lg p-1 w-1/2">
+                        <div class="flex bg-pink-50 rounded-lg p-1 w-1/2">
                             <label class="flex-1 cursor-pointer"><input type="radio" name="split-currency" value="JPY" class="hidden split-currency-radio peer" checked><div class="text-center py-2 rounded-md text-xs font-bold text-gray-500 peer-checked:bg-muji-highlight peer-checked:text-white transition-all">JPY</div></label>
                             <label class="flex-1 cursor-pointer"><input type="radio" name="split-currency" value="TWD" class="hidden split-currency-radio peer"><div class="text-center py-2 rounded-md text-xs font-bold text-gray-500 peer-checked:bg-muji-highlight peer-checked:text-white transition-all">TWD</div></label>
                         </div>
                         <div class="relative flex-1">
                             <span class="absolute left-2 top-2.5 text-xs text-gray-400">匯率</span>
                             <div class="flex">
-                                <input type="number" id="split-rate" step="0.001" placeholder="0.22" class="w-full bg-amber-50/50 border border-muji-border rounded-l-lg rounded-r-none pl-10 pr-1 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition">
-                                <button onclick="syncSplitRateFromWallet()" class="bg-amber-50 border border-l-0 border-muji-border rounded-r-lg px-2 text-xs text-gray-500 hover:bg-amber-100 transition" title="同步記帳匯率">
+                                <input type="number" id="split-rate" step="0.001" placeholder="0.22" class="w-full bg-pink-50/50 border border-muji-border rounded-l-lg rounded-r-none pl-10 pr-1 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition">
+                                <button onclick="syncSplitRateFromWallet()" class="bg-pink-50 border border-l-0 border-muji-border rounded-r-lg px-2 text-xs text-gray-500 hover:bg-pink-100 transition" title="同步記帳匯率">
                                     <i class="fa-solid fa-rotate"></i>
                                 </button>
                             </div>
                         </div>
                      </div>
-                     <input type="text" id="split-item" placeholder="項目 (如: 晚餐、車資)" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition">
+                     <input type="text" id="split-item" placeholder="項目 (如: 晚餐、車資)" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition">
                      <div class="flex gap-3">
-                        <input type="number" id="split-amount" placeholder="金額" class="w-2/3 bg-amber-50/50 border border-muji-border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition">
-                        <select id="split-payer" class="w-1/3 bg-amber-50/50 border border-muji-border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></select>
+                        <input type="number" id="split-amount" placeholder="金額" class="w-2/3 bg-pink-50/50 border border-muji-border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition">
+                        <select id="split-payer" class="w-1/3 bg-pink-50/50 border border-muji-border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></select>
                      </div>
-                     <div class="bg-amber-50/40 p-3 rounded-lg border border-amber-100">
+                     <div class="bg-amber-50/50 p-3 rounded-lg border border-amber-100">
                          <div class="text-xs text-gray-500 mb-2 font-bold flex justify-between items-center">
                              <span>分攤人 (預設全選)</span>
-                             <button onclick="toggleAllSplitInvolved()" class="text-muji-highlight hover:underline font-bold">全選/取消</button>
+                             <button onclick="toggleAllSplitInvolved()" class="text-muji-accent hover:underline font-bold">全選/取消</button>
                          </div>
                          <div id="split-involved-container" class="grid grid-cols-3 gap-2"></div>
                      </div>
@@ -230,8 +244,8 @@
             <div class="mb-8">
                 <h2 class="text-lg font-bold mb-4 flex items-center text-muji-text"><i class="fa-solid fa-clipboard-check mr-2 text-muji-highlight"></i>行前準備</h2>
                 <div class="bg-white rounded-2xl shadow-sm border border-muji-border overflow-hidden">
-                    <div id="checklist-container" class="divide-y divide-amber-100"></div>
-                    <div class="p-4 bg-amber-50/50 border-t border-muji-border">
+                    <div id="checklist-container" class="divide-y divide-pink-100"></div>
+                    <div class="p-4 bg-pink-50/50 border-t border-muji-border">
                         <div class="flex space-x-3">
                             <input type="text" id="new-todo" placeholder="新增項目..." class="flex-1 bg-white border border-muji-border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition">
                             <button onclick="addTodo()" class="bg-muji-highlight text-white font-bold text-sm px-4 rounded-xl shadow-sm hover:bg-amber-600 transition">新增</button>
@@ -250,7 +264,7 @@
                 <h2 class="text-lg font-bold mb-4 flex items-center text-muji-text"><i class="fa-regular fa-note-sticky mr-2 text-muji-highlight"></i>備忘錄</h2>
                 <div class="bg-white rounded-2xl shadow-sm border border-muji-border p-5 relative">
                     <textarea id="memo-area" class="w-full h-48 text-sm leading-relaxed text-gray-700 focus:outline-none resize-none bg-transparent" placeholder="輸入備忘錄..."></textarea>
-                    <div class="absolute bottom-3 right-5 text-[10px] text-amber-500 font-bold bg-amber-50 px-2 py-1 rounded">自動儲存</div>
+                    <div class="absolute bottom-3 right-5 text-[10px] text-amber-600 font-bold bg-amber-50 px-2 py-1 rounded">自動儲存</div>
                 </div>
                 <div id="memo-links" class="mt-4 space-y-2"></div>
             </div>
@@ -261,10 +275,10 @@
             <h2 class="text-2xl font-light mb-6 text-center tracking-widest border-b pb-2 border-muji-border text-muji-text">行程資訊</h2>
             
             <div class="grid grid-cols-2 gap-4 mb-6">
-                <a href="https://www.jma.go.jp/bosai/forecast/" target="_blank" class="bg-white p-5 rounded-2xl shadow-sm border border-muji-border flex flex-col items-center justify-center text-amber-600 hover:bg-amber-50 transition group">
+                <a href="https://www.jma.go.jp/bosai/forecast/" target="_blank" class="bg-white p-5 rounded-2xl shadow-sm border border-muji-border flex flex-col items-center justify-center text-amber-600 hover:bg-pink-50 transition group">
                     <i class="fa-solid fa-cloud-sun text-3xl mb-2 group-hover:scale-110 transition"></i><span class="text-sm font-bold">天氣預報</span>
                 </a>
-                <a href="https://translate.google.com/?sl=zh-TW&tl=ja" target="_blank" class="bg-white p-5 rounded-2xl shadow-sm border border-muji-border flex flex-col items-center justify-center text-green-600 hover:bg-amber-50 transition group">
+                <a href="https://translate.google.com/?sl=zh-TW&tl=ja" target="_blank" class="bg-white p-5 rounded-2xl shadow-sm border border-muji-border flex flex-col items-center justify-center text-green-600 hover:bg-pink-50 transition group">
                     <i class="fa-solid fa-language text-3xl mb-2 group-hover:scale-110 transition"></i><span class="text-sm font-bold">Google 翻譯</span>
                 </a>
             </div>
@@ -299,8 +313,8 @@
             <div class="bg-white rounded-2xl shadow-sm border border-muji-border p-6 mb-6">
                 <h3 class="text-lg font-bold border-l-4 border-red-500 pl-3 mb-4 text-muji-text">緊急聯絡</h3>
                 <ul class="space-y-4 text-sm">
-                    <li class="flex justify-between border-b border-amber-50 pb-2"><span class="text-gray-600">警察局</span><a href="tel:110" class="text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded">110</a></li>
-                    <li class="flex justify-between border-b border-amber-50 pb-2"><span class="text-gray-600">火警/救護車</span><a href="tel:119" class="text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded">119</a></li>
+                    <li class="flex justify-between border-b border-pink-50 pb-2"><span class="text-gray-600">警察局</span><a href="tel:110" class="text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded">110</a></li>
+                    <li class="flex justify-between border-b border-pink-50 pb-2"><span class="text-gray-600">火警/救護車</span><a href="tel:119" class="text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded">119</a></li>
                     <li class="flex flex-col gap-1"><span class="text-gray-600">台北駐大阪經濟文化辦事處 (管轄四國)</span><a href="tel:06-6227-8623" class="text-amber-700 font-bold self-end bg-amber-50 px-2 py-0.5 rounded">06-6227-8623</a></li>
                 </ul>
             </div>
@@ -334,20 +348,48 @@
     </nav>
 
     <!-- Modals -->
-    <div id="event-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden"><h3 id="event-modal-title" class="text-xl font-bold text-muji-text mb-4 border-l-4 border-muji-highlight pl-3">新增行程</h3><div class="space-y-3"><div><label class="block text-xs font-bold text-gray-500 mb-1">時間</label><input type="time" id="event-time" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">景點名稱</label><input type="text" id="event-title" placeholder="請輸入景點名稱" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">描述/備註</label><textarea id="event-desc" rows="3" placeholder="備註..." class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></textarea></div><div><label class="block text-xs font-bold text-gray-500 mb-1">Google Maps 搜尋關鍵字</label><input type="text" id="event-map" placeholder="用於導航連結" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">詳細資訊 (Info)</label><textarea id="event-info" rows="3" placeholder="詳細介紹..." class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></textarea></div><div class="flex items-center space-x-2 pt-1"><input type="checkbox" id="event-funpass" class="w-5 h-5 text-muji-highlight rounded focus:ring-muji-highlight border-gray-300"><span class="text-sm font-medium text-gray-700">標記為重點景點</span></div></div><div class="flex gap-3 mt-6"><button onclick="closeEventModal()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveEvent()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
+    <div id="event-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
+        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden">
+            <h3 id="event-modal-title" class="text-xl font-bold text-muji-text mb-4 border-l-4 border-muji-highlight pl-3">新增行程</h3>
+            <div class="space-y-3">
+                <div><label class="block text-xs font-bold text-gray-500 mb-1">時間</label><input type="time" id="event-time" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div>
+                <div><label class="block text-xs font-bold text-gray-500 mb-1">景點名稱</label><input type="text" id="event-title" placeholder="請輸入景點名稱" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div>
+                <div><label class="block text-xs font-bold text-gray-500 mb-1">描述/備註</label><textarea id="event-desc" rows="3" placeholder="備註..." class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></textarea></div>
+                
+                <!-- Google Maps 二選一 -->
+                <div class="bg-amber-50/40 p-3 rounded-xl border border-amber-100 space-y-2">
+                    <div>
+                        <label class="block text-xs font-bold text-muji-accent mb-1">Google Maps 搜尋關鍵字</label>
+                        <input type="text" id="event-map" placeholder="例如：金刀比羅宮" class="w-full bg-white border border-muji-border rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-muji-accent mb-1">或 Google Maps 網址連結</label>
+                        <input type="text" id="event-map-url" placeholder="https://maps.app.goo.gl/..." class="w-full bg-white border border-muji-border rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition">
+                    </div>
+                </div>
+
+                <div><label class="block text-xs font-bold text-gray-500 mb-1">詳細資訊 (Info)</label><textarea id="event-info" rows="3" placeholder="詳細介紹..." class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></textarea></div>
+                <div class="flex items-center space-x-2 pt-1"><input type="checkbox" id="event-funpass" class="w-5 h-5 text-muji-highlight rounded focus:ring-muji-highlight border-gray-300"><span class="text-sm font-medium text-gray-700">標記為重點景點</span></div>
+            </div>
+            <div class="flex gap-3 mt-6">
+                <button onclick="closeEventModal()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button>
+                <button onclick="saveEvent()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button>
+            </div>
+        </div>
+    </div>
     
-    <div id="day-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden"><h3 class="text-xl font-bold text-muji-text mb-4 border-l-4 border-muji-highlight pl-3">編輯單日資訊</h3><div class="space-y-3"><div><label class="block text-xs font-bold text-gray-500 mb-1">日期</label><input type="text" id="day-date" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">主題 (Title)</label><input type="text" id="day-title" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">標籤 (Tag)</label><input type="text" id="day-tag" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div></div><div class="flex gap-3 mt-6"><button onclick="closeDayModal()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveDayInfo()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
+    <div id="day-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden"><h3 class="text-xl font-bold text-muji-text mb-4 border-l-4 border-muji-highlight pl-3">編輯單日資訊</h3><div class="space-y-3"><div><label class="block text-xs font-bold text-gray-500 mb-1">日期</label><input type="text" id="day-date" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">主題 (Title)</label><input type="text" id="day-title" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">標籤 (Tag)</label><input type="text" id="day-tag" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div></div><div class="flex gap-3 mt-6"><button onclick="closeDayModal()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveDayInfo()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
     
     <!-- Info Modals -->
-    <div id="flight-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"><h3 class="text-xl font-bold text-muji-text mb-4 border-l-4 border-amber-500 pl-3">編輯航班資訊</h3><div class="space-y-4"><div class="border-b border-amber-100 pb-2 font-bold text-muji-accent">去程航班</div><div><label class="block text-xs font-bold text-gray-500 mb-1">航班名稱與日期</label><div class="flex gap-2"><input type="text" id="flight-out-name" placeholder="星宇航空 JX..." class="flex-1 bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"><input type="text" id="flight-out-date" placeholder="2026/10/26" class="w-1/3 bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">起飛 / 降落 資訊</label><div class="flex gap-2"><input type="text" id="flight-out-dep" placeholder="10:00 RMQ" class="flex-1 bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"><input type="text" id="flight-out-arr" placeholder="12:20 TAK" class="flex-1 bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">備註</label><input type="text" id="flight-out-note" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"></div><div class="border-b border-amber-100 pb-2 mt-4 font-bold text-muji-accent">回程航班</div><div><label class="block text-xs font-bold text-gray-500 mb-1">航班名稱與日期</label><div class="flex gap-2"><input type="text" id="flight-in-name" class="flex-1 bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"><input type="text" id="flight-in-date" class="w-1/3 bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">起飛 / 降落 資訊</label><div class="flex gap-2"><input type="text" id="flight-in-dep" class="flex-1 bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"><input type="text" id="flight-in-arr" class="flex-1 bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">備註</label><input type="text" id="flight-in-note" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div class="flex gap-3 mt-6"><button onclick="closeInfoModals()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveFlightInfo()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
+    <div id="flight-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"><h3 class="text-xl font-bold text-muji-text mb-4 border-l-4 border-amber-500 pl-3">編輯航班資訊</h3><div class="space-y-4"><div class="border-b border-pink-100 pb-2 font-bold text-muji-accent">去程航班</div><div><label class="block text-xs font-bold text-gray-500 mb-1">航班名稱與日期</label><div class="flex gap-2"><input type="text" id="flight-out-name" placeholder="星宇航空 JX..." class="flex-1 bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"><input type="text" id="flight-out-date" placeholder="2026/10/26" class="w-1/3 bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">起飛 / 降落 資訊</label><div class="flex gap-2"><input type="text" id="flight-out-dep" placeholder="10:00 RMQ" class="flex-1 bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"><input type="text" id="flight-out-arr" placeholder="12:20 TAK" class="flex-1 bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">備註</label><input type="text" id="flight-out-note" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"></div><div class="border-b border-pink-100 pb-2 mt-4 font-bold text-muji-accent">回程航班</div><div><label class="block text-xs font-bold text-gray-500 mb-1">航班名稱與日期</label><div class="flex gap-2"><input type="text" id="flight-in-name" class="flex-1 bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"><input type="text" id="flight-in-date" class="w-1/3 bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">起飛 / 降落 資訊</label><div class="flex gap-2"><input type="text" id="flight-in-dep" class="flex-1 bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"><input type="text" id="flight-in-arr" class="flex-1 bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">備註</label><input type="text" id="flight-in-note" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div class="flex gap-3 mt-6"><button onclick="closeInfoModals()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveFlightInfo()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
 
-    <div id="hotel-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"><h3 class="text-xl font-bold text-muji-text mb-4 border-l-4 border-amber-500 pl-3">編輯住宿資訊</h3><div class="space-y-4"><div><label class="block text-xs font-bold text-gray-500 mb-1">飯店名稱</label><input type="text" id="hotel-name" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">地址/聯絡資訊</label><textarea id="hotel-address" rows="2" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></textarea></div><div><label class="block text-xs font-bold text-gray-500 mb-1">Google Maps 連結</label><input type="text" id="hotel-map" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></div></div><div class="flex gap-3 mt-6"><button onclick="closeInfoModals()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveHotelInfo()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
+    <div id="hotel-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"><h3 class="text-xl font-bold text-muji-text mb-4 border-l-4 border-amber-500 pl-3">編輯住宿資訊</h3><div class="space-y-4"><div><label class="block text-xs font-bold text-gray-500 mb-1">飯店名稱</label><input type="text" id="hotel-name" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">地址/聯絡資訊</label><textarea id="hotel-address" rows="2" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></textarea></div><div><label class="block text-xs font-bold text-gray-500 mb-1">Google Maps 連結</label><input type="text" id="hotel-map" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></div></div><div class="flex gap-3 mt-6"><button onclick="closeInfoModals()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveHotelInfo()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
 
-    <div id="car-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"><h3 class="text-xl font-bold text-muji-text mb-4 border-l-4 border-amber-500 pl-3">編輯租車資訊</h3><div class="space-y-4"><div><label class="block text-xs font-bold text-gray-500 mb-1">租車公司名稱</label><input type="text" id="car-company" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></div><div class="flex gap-2"><div><label class="block text-xs font-bold text-gray-500 mb-1">取車時間</label><input type="text" id="car-pickup-time" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">取車地點</label><input type="text" id="car-pickup-loc" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div class="flex gap-2"><div><label class="block text-xs font-bold text-gray-500 mb-1">還車時間</label><input type="text" id="car-dropoff-time" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">還車地點</label><input type="text" id="car-dropoff-loc" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">預約號碼/備註</label><input type="text" id="car-note" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">Google Maps 連結</label><input type="text" id="car-map" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></div></div><div class="flex gap-3 mt-6"><button onclick="closeInfoModals()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveCarInfo()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
+    <div id="car-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"><h3 class="text-xl font-bold text-muji-text mb-4 border-l-4 border-amber-500 pl-3">編輯租車資訊</h3><div class="space-y-4"><div><label class="block text-xs font-bold text-gray-500 mb-1">租車公司名稱</label><input type="text" id="car-company" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></div><div class="flex gap-2"><div><label class="block text-xs font-bold text-gray-500 mb-1">取車時間</label><input type="text" id="car-pickup-time" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">取車地點</label><input type="text" id="car-pickup-loc" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div class="flex gap-2"><div><label class="block text-xs font-bold text-gray-500 mb-1">還車時間</label><input type="text" id="car-dropoff-time" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">還車地點</label><input type="text" id="car-dropoff-loc" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2 text-sm"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">預約號碼/備註</label><input type="text" id="car-note" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">Google Maps 連結</label><input type="text" id="car-map" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm"></div></div><div class="flex gap-3 mt-6"><button onclick="closeInfoModals()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveCarInfo()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
 
-    <div id="expense-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"><h3 id="expense-modal-title" class="text-xl font-bold text-muji-text mb-4 border-l-4 border-muji-highlight pl-3">新增記帳</h3><div class="space-y-4"><div><label class="block text-xs font-bold text-gray-500 mb-1">日期</label><input type="date" id="modal-expense-date" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div class="flex bg-amber-50 rounded-lg p-1"><label class="flex-1 cursor-pointer"><input type="radio" name="currency" value="JPY" class="hidden peer" checked onchange="updateModalCurrencyLabel()"><div class="text-center py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-muji-highlight peer-checked:text-white transition-all">JPY 日幣</div></label><label class="flex-1 cursor-pointer"><input type="radio" name="currency" value="TWD" class="hidden peer" onchange="updateModalCurrencyLabel()"><div class="text-center py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-muji-highlight peer-checked:text-white transition-all">TWD 台幣</div></label></div><div><label class="block text-xs font-bold text-gray-500 mb-1">金額</label><div class="relative"><span id="modal-currency-symbol" class="absolute left-3 top-2.5 text-gray-400 font-bold">¥</span><input type="number" id="modal-expense-amount" placeholder="0" class="w-full bg-amber-50/50 border border-muji-border rounded-lg pl-8 pr-3 py-2.5 text-lg font-bold text-muji-text focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-2">付款方式</label><div class="flex bg-amber-50 rounded-lg p-1"><label class="flex-1 cursor-pointer"><input type="radio" name="payment" value="cash" class="hidden peer" checked><div class="text-center py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-muji-highlight peer-checked:text-white transition-all">現金</div></label><label class="flex-1 cursor-pointer"><input type="radio" name="payment" value="card" class="hidden peer"><div class="text-center py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-muji-highlight peer-checked:text-white transition-all">信用卡</div></label></div></div><div><label class="block text-xs font-bold text-gray-500 mb-2">分類</label><div class="grid grid-cols-4 gap-2"><label class="cursor-pointer"><input type="radio" name="category" value="transport" class="hidden category-radio"><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-amber-200 text-gray-400 hover:bg-amber-50 transition h-16"><i class="fa-solid fa-train-subway text-lg mb-1"></i><span class="text-[10px]">交通</span></div></label><label class="cursor-pointer"><input type="radio" name="category" value="food" class="hidden category-radio" checked><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-amber-200 text-gray-400 hover:bg-amber-50 transition h-16"><i class="fa-solid fa-utensils text-lg mb-1"></i><span class="text-[10px]">飲食</span></div></label><label class="cursor-pointer"><input type="radio" name="category" value="hotel" class="hidden category-radio"><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-amber-200 text-gray-400 hover:bg-amber-50 transition h-16"><i class="fa-solid fa-bed text-lg mb-1"></i><span class="text-[10px]">住宿</span></div></label><label class="cursor-pointer"><input type="radio" name="category" value="ticket" class="hidden category-radio"><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-amber-200 text-gray-400 hover:bg-amber-50 transition h-16"><i class="fa-solid fa-ticket text-lg mb-1"></i><span class="text-[10px]">門票</span></div></label><label class="cursor-pointer"><input type="radio" name="category" value="shopping" class="hidden category-radio"><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-amber-200 text-gray-400 hover:bg-amber-50 transition h-16"><i class="fa-solid fa-bag-shopping text-lg mb-1"></i><span class="text-[10px]">購物</span></div></label><label class="cursor-pointer"><input type="radio" name="category" value="other" class="hidden category-radio"><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-amber-200 text-gray-400 hover:bg-amber-50 transition h-16"><i class="fa-solid fa-ellipsis text-lg mb-1"></i><span class="text-[10px]">其他</span></div></label></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">名稱</label><input type="text" id="modal-expense-item" placeholder="例如: 拉麵" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">備註</label><textarea id="modal-expense-note" rows="2" placeholder="備註..." class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></textarea></div><div><label class="w-full bg-white border border-dashed border-muji-highlight text-muji-accent rounded-xl flex flex-col items-center justify-center py-3 cursor-pointer hover:bg-amber-50 transition shadow-sm"><i class="fa-solid fa-camera mb-1"></i><span class="text-xs font-bold">上傳照片 / 拍照</span><input type="file" id="modal-expense-photo" accept="image/*" class="hidden" onchange="previewImageModal(this)"></label><div id="modal-photo-preview-container" class="hidden mt-2 relative"><img id="modal-photo-preview" class="h-24 w-full rounded-lg object-cover border border-amber-200"><button onclick="clearModalPhoto()" class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center shadow-md"><i class="fa-solid fa-times text-[10px]"></i></button></div></div></div><div class="flex gap-3 mt-6"><button onclick="closeExpenseModal()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveExpenseFromModal()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
+    <div id="expense-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"><h3 id="expense-modal-title" class="text-xl font-bold text-muji-text mb-4 border-l-4 border-muji-highlight pl-3">新增記帳</h3><div class="space-y-4"><div><label class="block text-xs font-bold text-gray-500 mb-1">日期</label><input type="date" id="modal-expense-date" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div class="flex bg-pink-50 rounded-lg p-1"><label class="flex-1 cursor-pointer"><input type="radio" name="currency" value="JPY" class="hidden peer" checked onchange="updateModalCurrencyLabel()"><div class="text-center py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-muji-highlight peer-checked:text-white transition-all">JPY 日幣</div></label><label class="flex-1 cursor-pointer"><input type="radio" name="currency" value="TWD" class="hidden peer" onchange="updateModalCurrencyLabel()"><div class="text-center py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-muji-highlight peer-checked:text-white transition-all">TWD 台幣</div></label></div><div><label class="block text-xs font-bold text-gray-500 mb-1">金額</label><div class="relative"><span id="modal-currency-symbol" class="absolute left-3 top-2.5 text-gray-400 font-bold">¥</span><input type="number" id="modal-expense-amount" placeholder="0" class="w-full bg-pink-50/50 border border-muji-border rounded-lg pl-8 pr-3 py-2.5 text-lg font-bold text-muji-text focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div></div><div><label class="block text-xs font-bold text-gray-500 mb-2">付款方式</label><div class="flex bg-pink-50 rounded-lg p-1"><label class="flex-1 cursor-pointer"><input type="radio" name="payment" value="cash" class="hidden peer" checked><div class="text-center py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-muji-highlight peer-checked:text-white transition-all">現金</div></label><label class="flex-1 cursor-pointer"><input type="radio" name="payment" value="card" class="hidden peer"><div class="text-center py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-muji-highlight peer-checked:text-white transition-all">信用卡</div></label></div></div><div><label class="block text-xs font-bold text-gray-500 mb-2">分類</label><div class="grid grid-cols-4 gap-2"><label class="cursor-pointer"><input type="radio" name="category" value="transport" class="hidden category-radio"><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-pink-200 text-gray-400 hover:bg-pink-50 transition h-16"><i class="fa-solid fa-train-subway text-lg mb-1"></i><span class="text-[10px]">交通</span></div></label><label class="cursor-pointer"><input type="radio" name="category" value="food" class="hidden category-radio" checked><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-pink-200 text-gray-400 hover:bg-pink-50 transition h-16"><i class="fa-solid fa-utensils text-lg mb-1"></i><span class="text-[10px]">飲食</span></div></label><label class="cursor-pointer"><input type="radio" name="category" value="hotel" class="hidden category-radio"><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-pink-200 text-gray-400 hover:bg-pink-50 transition h-16"><i class="fa-solid fa-bed text-lg mb-1"></i><span class="text-[10px]">住宿</span></div></label><label class="cursor-pointer"><input type="radio" name="category" value="ticket" class="hidden category-radio"><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-pink-200 text-gray-400 hover:bg-pink-50 transition h-16"><i class="fa-solid fa-ticket text-lg mb-1"></i><span class="text-[10px]">門票</span></div></label><label class="cursor-pointer"><input type="radio" name="category" value="shopping" class="hidden category-radio"><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-pink-200 text-gray-400 hover:bg-pink-50 transition h-16"><i class="fa-solid fa-bag-shopping text-lg mb-1"></i><span class="text-[10px]">購物</span></div></label><label class="cursor-pointer"><input type="radio" name="category" value="other" class="hidden category-radio"><div class="flex flex-col items-center justify-center p-2 rounded-lg border border-pink-200 text-gray-400 hover:bg-pink-50 transition h-16"><i class="fa-solid fa-ellipsis text-lg mb-1"></i><span class="text-[10px]">其他</span></div></label></div></div><div><label class="block text-xs font-bold text-gray-500 mb-1">名稱</label><input type="text" id="modal-expense-item" placeholder="例如: 拉麵" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">備註</label><textarea id="modal-expense-note" rows="2" placeholder="備註..." class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></textarea></div><div><label class="w-full bg-white border border-dashed border-muji-highlight text-muji-accent rounded-xl flex flex-col items-center justify-center py-3 cursor-pointer hover:bg-pink-50 transition shadow-sm"><i class="fa-solid fa-camera mb-1"></i><span class="text-xs font-bold">上傳照片 / 拍照</span><input type="file" id="modal-expense-photo" accept="image/*" class="hidden" onchange="previewImageModal(this)"></label><div id="modal-photo-preview-container" class="hidden mt-2 relative"><img id="modal-photo-preview" class="h-24 w-full rounded-lg object-cover border border-pink-200"><button onclick="clearModalPhoto()" class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center shadow-md"><i class="fa-solid fa-times text-[10px]"></i></button></div></div></div><div class="flex gap-3 mt-6"><button onclick="closeExpenseModal()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveExpenseFromModal()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
     
-    <div id="shopping-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden"><h3 id="shopping-modal-title" class="text-xl font-bold text-muji-text mb-4 border-l-4 border-muji-highlight pl-3">新增待買項目</h3><div class="space-y-4"><div><label class="block text-xs font-bold text-gray-500 mb-1">商品名稱</label><input type="text" id="shopping-name" placeholder="請輸入商品名稱" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">預計金額 / 預算</label><input type="number" id="shopping-amount" placeholder="金額 (選填)" class="w-full bg-amber-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="w-full bg-white border border-dashed border-muji-highlight text-muji-accent rounded-xl flex flex-col items-center justify-center py-3 cursor-pointer hover:bg-amber-50 transition shadow-sm"><i class="fa-solid fa-camera mb-1"></i><span class="text-xs font-bold">上傳參考照片</span><input type="file" id="shopping-photo" accept="image/*" class="hidden" onchange="previewShoppingImage(this)"></label><div id="shopping-photo-preview-container" class="hidden mt-2 relative"><img id="shopping-photo-preview" class="h-32 w-full rounded-lg object-cover border border-amber-200"><button onclick="clearShoppingPhoto()" class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center shadow-md"><i class="fa-solid fa-times text-[10px]"></i></button></div></div></div><div class="flex gap-3 mt-6"><button onclick="closeShoppingModal()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveShoppingItem()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
+    <div id="shopping-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"><div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl relative overflow-hidden"><h3 id="shopping-modal-title" class="text-xl font-bold text-muji-text mb-4 border-l-4 border-muji-highlight pl-3">新增待買項目</h3><div class="space-y-4"><div><label class="block text-xs font-bold text-gray-500 mb-1">商品名稱</label><input type="text" id="shopping-name" placeholder="請輸入商品名稱" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="block text-xs font-bold text-gray-500 mb-1">預計金額 / 預算</label><input type="number" id="shopping-amount" placeholder="金額 (選填)" class="w-full bg-pink-50/50 border border-muji-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-muji-highlight transition"></div><div><label class="w-full bg-white border border-dashed border-muji-highlight text-muji-accent rounded-xl flex flex-col items-center justify-center py-3 cursor-pointer hover:bg-pink-50 transition shadow-sm"><i class="fa-solid fa-camera mb-1"></i><span class="text-xs font-bold">上傳參考照片</span><input type="file" id="shopping-photo" accept="image/*" class="hidden" onchange="previewShoppingImage(this)"></label><div id="shopping-photo-preview-container" class="hidden mt-2 relative"><img id="shopping-photo-preview" class="h-32 w-full rounded-lg object-cover border border-pink-200"><button onclick="clearShoppingPhoto()" class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center shadow-md"><i class="fa-solid fa-times text-[10px]"></i></button></div></div></div><div class="flex gap-3 mt-6"><button onclick="closeShoppingModal()" class="flex-1 bg-gray-200 text-gray-600 font-bold py-2.5 rounded-xl shadow-sm hover:bg-gray-300 transition">取消</button><button onclick="saveShoppingItem()" class="flex-1 bg-muji-highlight text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-amber-600 transition">儲存</button></div></div></div>
     
     <div id="photo-viewer-modal" class="fixed inset-0 bg-black/90 z-[70] hidden flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in" onclick="closePhotoViewer()"><img id="photo-viewer-img" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl" src="" alt="Photo"><button onclick="closePhotoViewer()" class="absolute top-4 right-4 text-white text-2xl p-2 bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/70"><i class="fa-solid fa-times"></i></button></div>
 
@@ -448,7 +490,7 @@
                     ]
                 },
                 {
-                    day: "Day 3", date: "10/28 週三", title: "跨縣德島尋大潮", tag: "需備妥 ETC",
+                    day: "Day 3", date: "10/28 週三", title: "跨縣德島尋大潮", tag: "建議用 ETC",
                     events: [
                         { time: "10:30", title: "鳴門漩渦", desc: "搭乘觀潮船或走上「渦之道」玻璃步道，近距離感受大自然奇觀。", highlight: true, map: "鳴門漩渦", info: "需走高速公路（高德自動車道），單程過路費約 2000 日圓。請確認當日大潮時間！", image: "" },
                         { time: "13:15", title: "德島眉山天神社", desc: "參拜神社，隨後可搭乘眉山纜車俯瞰德島市景，並享用德島拉麵。", map: "德島眉山天神社", info: "以精美御朱印聞名", image: "" },
@@ -504,19 +546,22 @@
             });
             tabsHtml += `</div>`;
 
-            let weatherHtml = `<div id="daily-weather" class="mb-6 bg-gradient-to-r from-amber-100 to-amber-50 p-4 rounded-xl flex items-center justify-between shadow-sm border border-amber-200"><div class="flex items-center"><i id="weather-icon" class="fa-solid fa-cloud text-3xl text-muji-accent mr-3"></i><div><div class="text-xs text-gray-500 font-bold">高松市 目前天氣</div><div class="text-xl font-bold text-muji-text"><span id="weather-temp">--</span>°C</div></div></div><div class="text-right"><div class="text-xs text-gray-500">體感溫度</div><div class="text-sm font-bold text-muji-accent"><span id="weather-feels">--</span>°C</div></div></div>`;
+            let weatherHtml = `<div id="daily-weather" class="mb-6 bg-gradient-to-r from-amber-100 to-pink-100 p-4 rounded-xl flex items-center justify-between shadow-sm border border-pink-200"><div class="flex items-center"><i id="weather-icon" class="fa-solid fa-cloud text-3xl text-muji-accent mr-3"></i><div><div class="text-xs text-gray-500 font-bold">高松市 目前天氣</div><div class="text-xl font-bold text-muji-text"><span id="weather-temp">--</span>°C</div></div></div><div class="text-right"><div class="text-xs text-gray-500">體感溫度</div><div class="text-sm font-bold text-muji-accent"><span id="weather-feels">--</span>°C</div></div></div>`;
 
             const day = itineraryData[currentDayIndex];
             let contentHtml = `
                 <div class="bg-white rounded-2xl shadow-sm border border-muji-border overflow-hidden animate-fade-in mb-6">
-                    <div class="bg-amber-50/50 px-5 py-4 border-b border-muji-border flex justify-between items-center">
+                    <div class="bg-pink-50/50 px-5 py-4 border-b border-muji-border flex justify-between items-center">
                         <div class="flex-1"><div class="flex items-center gap-2"><h3 class="font-bold text-xl text-muji-text">${day.date}</h3><button onclick="openEditDayModal(${currentDayIndex})" class="text-gray-400 hover:text-muji-highlight transition"><i class="fa-solid fa-pen-to-square text-sm"></i></button></div><p class="text-sm text-muji-accent mt-0.5 font-medium">${day.title}</p></div>
                         <span class="text-xs bg-muji-highlight text-white px-2.5 py-1 rounded-full shadow-sm font-bold tracking-wide">${day.tag}</span>
                     </div>
                     <div class="p-5 relative">
                         <div class="absolute left-7 top-6 bottom-6 w-0.5 bg-gray-100"></div>
                         <div class="space-y-8">
-                            ${day.events.map((event, eventIndex) => `
+                            ${day.events.map((event, eventIndex) => {
+                                const isUrl = event.map && (event.map.startsWith('http://') || event.map.startsWith('https://'));
+                                const mapHref = isUrl ? event.map : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.map || '')}`;
+                                return `
                                 <div class="relative pl-10 group">
                                     <div class="absolute left-0.5 top-1.5 w-4 h-4 rounded-full border-2 border-white ring-1 ring-muji-border ${event.highlight ? 'bg-muji-highlight shadow-md scale-110 ring-muji-highlight' : 'bg-gray-200'} z-10 transition-transform group-hover:scale-110"></div>
                                     <div class="flex flex-col gap-3">
@@ -528,14 +573,14 @@
                                             <h4 class="font-bold text-base text-gray-800 ${event.highlight ? 'text-muji-accent' : ''} mb-1 flex items-center flex-wrap gap-2">
                                                 ${event.title}
                                                 ${event.funpass ? '<span class="text-[10px] bg-amber-500 text-white px-1.5 py-0.5 rounded-full font-bold shadow-sm inline-flex items-center"><i class="fa-solid fa-star mr-1"></i>重點景點</span>' : ''}
-                                                ${event.map ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.map)}" target="_blank" class="inline-flex items-center justify-center bg-amber-50 text-muji-highlight w-6 h-6 rounded-full hover:bg-muji-highlight hover:text-white transition shadow-sm border border-amber-200"><i class="fa-solid fa-location-dot text-xs"></i></a>` : ''}
+                                                ${event.map ? `<a href="${mapHref}" target="_blank" class="inline-flex items-center justify-center bg-amber-50 text-muji-highlight w-6 h-6 rounded-full hover:bg-muji-highlight hover:text-white transition shadow-sm border border-amber-200"><i class="fa-solid fa-location-dot text-xs"></i></a>` : ''}
                                             </h4>
                                             <p class="text-sm text-gray-600 leading-relaxed mb-2">${event.desc}</p>
                                         </div>
-                                        ${event.info ? `<div class="bg-amber-50/40 rounded-xl overflow-hidden border border-amber-100 shadow-sm transition relative"><div class="p-3"><p class="text-xs text-gray-600 leading-relaxed"><i class="fa-solid fa-circle-info text-muji-highlight mr-1"></i>${event.info}</p></div></div>` : ''}
+                                        ${event.info ? `<div class="bg-pink-50/40 rounded-xl overflow-hidden border border-pink-100 shadow-sm transition relative"><div class="p-3"><p class="text-xs text-gray-600 leading-relaxed"><i class="fa-solid fa-circle-info text-muji-highlight mr-1"></i>${event.info}</p></div></div>` : ''}
                                     </div>
-                                </div>
-                            `).join('')}
+                                </div>`;
+                            }).join('')}
                         </div>
                     </div>
                 </div>
@@ -561,23 +606,34 @@
 
         function openAddEventModal(day) { editingEvent = null; setupEventModal("新增行程", "09:00", "", "", "", false, ""); }
         function openEditEventModal(d, e) { const ev = itineraryData[d].events[e]; editingEvent = {d, e}; setupEventModal("編輯行程", ev.time, ev.title, ev.desc, ev.map, ev.funpass, ev.info); }
+        
         function setupEventModal(title, time, name, desc, map, fun, info) {
             document.getElementById('event-modal-title').innerText = title;
             document.getElementById('event-time').value = time;
             document.getElementById('event-title').value = name;
             document.getElementById('event-desc').value = desc || "";
-            document.getElementById('event-map').value = map || "";
             document.getElementById('event-info').value = info || "";
             document.getElementById('event-funpass').checked = fun || false;
+            
+            const isUrl = map && (map.startsWith('http://') || map.startsWith('https://'));
+            document.getElementById('event-map-url').value = isUrl ? map : "";
+            document.getElementById('event-map').value = !isUrl ? (map || "") : "";
+
             document.getElementById('event-modal').classList.remove('hidden');
         }
+        
         function closeEventModal() { document.getElementById('event-modal').classList.add('hidden'); }
+        
         function saveEvent() {
+            const mapKey = document.getElementById('event-map').value.trim();
+            const mapUrl = document.getElementById('event-map-url').value.trim();
+            const finalMap = mapUrl || mapKey;
+
             const newEv = {
                 time: document.getElementById('event-time').value,
                 title: document.getElementById('event-title').value,
                 desc: document.getElementById('event-desc').value,
-                map: document.getElementById('event-map').value,
+                map: finalMap,
                 funpass: document.getElementById('event-funpass').checked,
                 info: document.getElementById('event-info').value,
                 image: "" 
@@ -595,6 +651,7 @@
             renderItinerary();
             closeEventModal();
         }
+        
         function deleteItineraryEvent(d, e) { if(confirm("確定刪除?")) { itineraryData[d].events.splice(e, 1); saveData('itinerary', itineraryData); renderItinerary(); } }
 
         function openEditDayModal(d) {
@@ -631,13 +688,13 @@
         /* --- INFO EDITING LOGIC --- */
         function renderInfoTabs() {
             document.getElementById('info-flights-content').innerHTML = `
-                <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100">
+                <div class="bg-pink-50/50 p-4 rounded-xl border border-pink-100">
                     <div class="font-bold text-muji-text mb-2 text-base">去程：${tripInfo.flights.out.name}</div>
                     <div class="flex justify-between mb-1"><span>${tripInfo.flights.out.date}</span><span class="font-mono font-bold text-muji-accent">${tripInfo.flights.out.depTime}</span></div>
                     <div class="flex justify-between mb-2"><span>落地時間</span><span class="font-mono font-bold text-muji-accent">${tripInfo.flights.out.arrTime}</span></div>
                     <div class="text-xs text-gray-500">${tripInfo.flights.out.note}</div>
                 </div>
-                <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100">
+                <div class="bg-pink-50/50 p-4 rounded-xl border border-pink-100">
                     <div class="font-bold text-muji-text mb-2 text-base">回程：${tripInfo.flights.in.name}</div>
                     <div class="flex justify-between mb-1"><span>${tripInfo.flights.in.date}</span><span class="font-mono font-bold text-muji-accent">${tripInfo.flights.in.depTime}</span></div>
                     <div class="flex justify-between mb-2"><span>落地時間</span><span class="font-mono font-bold text-muji-accent">${tripInfo.flights.in.arrTime}</span></div>
@@ -1106,9 +1163,9 @@
 
         function renderJapanesePhrases() {
             document.getElementById('japanese-phrases-container').innerHTML = japanesePhrases.map((c,i) => `
-                <details class="group bg-amber-50/50 rounded-lg border border-amber-100 overflow-hidden mb-2">
-                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-3 text-muji-text bg-amber-50 hover:bg-amber-100 transition"><span class="flex items-center"><span class="bg-muji-highlight text-white text-xs font-bold px-2 py-0.5 rounded-full mr-2">${i+1}</span>${c.category}</span><span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-xs text-gray-400"></i></span></summary>
-                    <div class="text-gray-600 divide-y divide-amber-100">${c.items.map(t=>`<div class="p-3 hover:bg-white transition"><div class="font-bold text-muji-accent text-base mb-1">${t.jp}</div><div class="text-xs text-gray-400 font-mono mb-1">${t.roma}</div><div class="text-sm text-gray-600">${t.tw}</div></div>`).join('')}</div>
+                <details class="group bg-pink-50/50 rounded-lg border border-pink-100 overflow-hidden mb-2">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-3 text-muji-text bg-pink-50 hover:bg-amber-100 transition"><span class="flex items-center"><span class="bg-muji-highlight text-white text-xs font-bold px-2 py-0.5 rounded-full mr-2">${i+1}</span>${c.category}</span><span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-xs text-gray-400"></i></span></summary>
+                    <div class="text-gray-600 divide-y divide-pink-100">${c.items.map(t=>`<div class="p-3 hover:bg-white transition"><div class="font-bold text-muji-accent text-base mb-1">${t.jp}</div><div class="text-xs text-gray-400 font-mono mb-1">${t.roma}</div><div class="text-sm text-gray-600">${t.tw}</div></div>`).join('')}</div>
                 </details>`).join('');
         }
 
