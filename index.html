@@ -624,33 +624,50 @@
         
         function closeEventModal() { document.getElementById('event-modal').classList.add('hidden'); }
         
-        function saveEvent() {
-            const mapKey = document.getElementById('event-map').value.trim();
-            const mapUrl = document.getElementById('event-map-url').value.trim();
-            const finalMap = mapUrl || mapKey;
+function saveEvent() {
+    const mapKey = document.getElementById('event-map').value.trim();
+    const mapUrl = document.getElementById('event-map-url').value.trim();
+    const finalMap = mapUrl || mapKey;
 
-            const newEv = {
-                time: document.getElementById('event-time').value,
-                title: document.getElementById('event-title').value,
-                desc: document.getElementById('event-desc').value,
-                map: finalMap,
-                funpass: document.getElementById('event-funpass').checked,
-                info: document.getElementById('event-info').value,
-                image: "" 
-            };
-            if(!newEv.title) return alert("請輸入名稱");
-            
-            if(editingEvent) {
-                newEv.image = itineraryData[editingEvent.d].events[editingEvent.e].image;
-                itineraryData[editingEvent.d].events[editingEvent.e] = newEv;
-            } else {
-                itineraryData[currentDayIndex].events.push(newEv);
-                itineraryData[currentDayIndex].events.sort((a,b) => a.time.localeCompare(b.time));
-            }
-            saveData('itinerary', itineraryData);
-            renderItinerary();
-            closeEventModal();
-        }
+    // 1. 自動把時間格式統一補齊前導零 (例如 "9:00" 自動轉為 "09:00")，避免字串排序錯亂
+    let timeValue = document.getElementById('event-time').value.trim();
+    if (timeValue && timeValue.indexOf(':') === 1) {
+        timeValue = '0' + timeValue;
+    }
+
+    const newEv = {
+        time: timeValue,
+        title: document.getElementById('event-title').value,
+        desc: document.getElementById('event-desc').value,
+        map: finalMap,
+        funpass: document.getElementById('event-funpass').checked,
+        info: document.getElementById('event-info').value,
+        image: "" 
+    };
+
+    if(!newEv.title) return alert("請輸入名稱");
+    
+    // 取得當前操作的日期索引
+    const dayIdx = editingEvent ? editingEvent.d : currentDayIndex;
+
+    if(editingEvent) {
+        newEv.image = itineraryData[editingEvent.d].events[editingEvent.e].image;
+        itineraryData[editingEvent.d].events[editingEvent.e] = newEv;
+    } else {
+        itineraryData[currentDayIndex].events.push(newEv);
+    }
+
+    // 2. 關鍵修正：無論是「新增」或「編輯」，一律對該日期的所有行程重新按時間排序
+    itineraryData[dayIdx].events.sort((a, b) => {
+        const tA = (a.time || '00:00').padStart(5, '0');
+        const tB = (b.time || '00:00').padStart(5, '0');
+        return tA.localeCompare(tB);
+    });
+
+    saveData('itinerary', itineraryData);
+    renderItinerary();
+    closeEventModal();
+}
         
         function deleteItineraryEvent(d, e) { if(confirm("確定刪除?")) { itineraryData[d].events.splice(e, 1); saveData('itinerary', itineraryData); renderItinerary(); } }
 
